@@ -1,0 +1,2 @@
+# SpaceInvaders
+Invaders es un juego en el que el jugador puede controlar una nave que se mueve horizontalmente en la parte inferior de la pantalla con el fin de eliminar a todos los invasores. Los invasores son hileras de enemigos que avanzan de arriba hacia abajo en la pantalla y se mueven de lado a lado. El jugador deberá mover la nave para eliminarlos y evitar que lleguen hacia la parte inferior de la pantalla.
