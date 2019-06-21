@@ -14,9 +14,13 @@ import javafx.scene.image.Image;
  * EnemyRow: Clase de las hileras enemigas.
  * 
  * @author Jonathan
+ * @version 3.0
  *
  */
 public abstract class EnemyRow {
+	/**
+	 * Variables de la clase.
+	 */
 	protected LinkedList enemyRow;
 	protected EnemyShip boosDirector;
 	protected double speedX;
@@ -31,6 +35,12 @@ public abstract class EnemyRow {
 	 */
 	public abstract void createEnemyRow(GraphicsContext graphics);
 
+	/**
+	 * Metodo que se encarga de animar graficamente la hilera de naves enemigas.
+	 * 
+	 * @param enemy:    Nave enemiga.
+	 * @param graphics: GraphicsContext donde se dibujaran las naves.
+	 */
 	public void animateEnemyRow(EnemyShip enemy, GraphicsContext graphics) {
 		double initPoss = enemy.getCoordX();
 		AnimationTimer animationTimer = new AnimationTimer() {
@@ -52,6 +62,7 @@ public abstract class EnemyRow {
 				}
 				if (enemy.getCoordY() >= 540) {
 					System.out.println("Game Over!!!!!!");
+					setEndGame(true);
 					stop();
 				}
 				if (enemy.getLogo() == null) {
@@ -65,10 +76,10 @@ public abstract class EnemyRow {
 	}
 
 	/**
-	 * Metodo que se encarga de crear una hilera de enemigos.
+	 * Metodo que se encarga de crear una hilera (lista) de enemigos.
 	 */
 	public void setEnemyRow() {
-		int size = 4 + (int) (Math.random() * ((6 - 4) + 1));// Obtiene un num random entre 4 y 6 incluyendo 6
+		int size = 4 + (int) (Math.random() * ((8 - 4) + 1));
 		int enemyCoordX = -10 * size + 60;
 		int enemyCoordY = 50;
 		for (int i = 1; i <= size; i++) {
@@ -88,10 +99,10 @@ public abstract class EnemyRow {
 		int shipPos = 1 + (int) (Math.random() * ((enemyRow.getSize() - 1) + 1));
 		Node current = enemyRow.getFlag();
 		while (current != null) {
-			if (current.getData().getShipPoss() == shipPos) {
-				current.getData().setBoss(true);
-				current.getData().setLogo(new Image("/Images/space-invadersA.png"));
-				return current.getData();
+			if (current.getEnemyShip().getShipPoss() == shipPos) {
+				current.getEnemyShip().setIsBoss(true);
+				current.getEnemyShip().setLogo(new Image("/Images/space-invadersA.png"));
+				return current.getEnemyShip();
 			}
 			current = current.getNext();
 		}
@@ -106,96 +117,110 @@ public abstract class EnemyRow {
 	}
 
 	/**
+	 * Getter: Obtiene la lista donde se encuentran las naves enemigas.
 	 * 
-	 * @return
+	 * @return LinkedList enemyRow: Lista enlazada que contiene las naves enemigas.
 	 */
 	public LinkedList getEnemyRow() {
 		return enemyRow;
 	}
 
 	/**
+	 * Setter: Establece una lista de naves enemigas.
 	 * 
-	 * @param enemyRow
+	 * @param enemyRow: Lista de naves enemigas.
 	 */
 	public void setEnemyRow(LinkedList enemyRow) {
 		this.enemyRow = enemyRow;
 	}
 
 	/**
+	 * Getter: Obtiene el jefe de una hilera de naves enemigas.
 	 * 
-	 * @return
+	 * @return EnemyShip boosDirector: Jefe de la hilera de naves enemigas.
 	 */
 	public EnemyShip getBoosDirector() {
 		return boosDirector;
 	}
 
 	/**
+	 * Setter: Establece el jefe de una hilera de naves enemigas.
 	 * 
-	 * @param boosDirector
+	 * @param boosDirector: Jefe de la hilera.
 	 */
 	public void setBoosDirector(EnemyShip boosDirector) {
 		this.boosDirector = boosDirector;
 	}
 
 	/**
+	 * Getter: Obtiene el valor de la velicidad de las naves en X.
 	 * 
-	 * @return
+	 * @return double speedX: Velocidad de las naves enemigas en X.
 	 */
 	public double getSpeedX() {
 		return speedX;
 	}
 
 	/**
+	 * Setter: Establece el valor de la velicidad de las naves en X.
 	 * 
-	 * @param speedX
+	 * @param speedX: Velocidad de las naves enemigas en X.
 	 */
 	public void setSpeedX(double speedX) {
 		this.speedX = speedX;
 	}
 
 	/**
+	 * Getter: Obtiene el valor de la velicidad de las naves en Y.
 	 * 
-	 * @return
+	 * @return double speedY: Velocidad de las naves enemigas en Y.
 	 */
 	public double getSpeedY() {
 		return speedY;
 	}
 
 	/**
+	 * Setter: Establece el valor de la velicidad de las naves en Y.
 	 * 
-	 * @param speedY
+	 * @param speedY: Velocidad de las naves enemigas en Y.
 	 */
 	public void setSpeedY(double speedY) {
 		this.speedY = speedY;
 	}
 
 	/**
+	 * Getter: Obtiene el valor de la variable bool.
 	 * 
-	 * @return
+	 * @return Boolean: Valor de la variable.
 	 */
 	public boolean getBool() {
 		return bool;
 	}
 
 	/**
+	 * Setter: Establece el valor de la variable bool.
 	 * 
-	 * @param bool
+	 * @param bool: Valor de la variable.
 	 */
 	public void setBool(boolean bool) {
 		this.bool = bool;
 	}
 
 	/**
+	 * Getter: Obtiene el valor de la variable endGame para conocer el estado del
+	 * juego.
 	 * 
-	 * @return
+	 * @return Boolean: Verdadero o falso, dependiendo del estado del juego.
 	 */
 	public boolean isEndGame() {
 		return endGame;
 	}
 
 	/**
+	 * Setter: Establece el valor de la variable endGame.
 	 * 
-	 * @param endGame
+	 * @param endGame: Verdadero o falso, dependiendo de si el juego ha finalizado o
+	 *                 no.
 	 */
 	public void setEndGame(boolean endGame) {
 		this.endGame = endGame;

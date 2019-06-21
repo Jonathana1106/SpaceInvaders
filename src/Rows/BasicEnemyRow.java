@@ -9,13 +9,16 @@ import Structures.SimpleLinkedList;
 import javafx.scene.canvas.GraphicsContext;
 
 /**
+ * BasicEnemyRow: Hilera basica de naves enemigas.
+ * 
  * @author Jonathan
+ * @version 3.0
  *
  */
 public class BasicEnemyRow extends EnemyRow {
 
 	/**
-	 * 
+	 * Constructor de la clase.
 	 */
 	public BasicEnemyRow() {
 		this.enemyRow = new SimpleLinkedList();
@@ -33,7 +36,7 @@ public class BasicEnemyRow extends EnemyRow {
 		}
 		Node currentNode = enemyRow.getFlag();
 		while (currentNode != null) {
-			EnemyShip enemy = currentNode.getData();
+			EnemyShip enemy = currentNode.getEnemyShip();
 			enemy.render(graphics);
 			if (bool == true) {
 				this.animateEnemyRow(enemy, graphics);
