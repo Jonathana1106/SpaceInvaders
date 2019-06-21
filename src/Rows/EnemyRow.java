@@ -22,11 +22,11 @@ public abstract class EnemyRow {
 	 * Variables de la clase.
 	 */
 	protected LinkedList enemyRow;
-	protected EnemyShip boosDirector;
-	protected double speedX;
-	protected double speedY;
+	protected EnemyShip boss;
+	protected double enemyXSpeed;
+	protected double enemyYSpeed;
 	protected boolean bool;
-	protected boolean endGame;
+	protected boolean endOfGame;
 
 	/**
 	 * Metodo que se encarga de crear una hilera de enemigos.
@@ -49,25 +49,23 @@ public abstract class EnemyRow {
 			public void handle(long arg0) {
 				graphics.clearRect(enemy.getCoordX(), enemy.getCoordY(), 1280, 720);
 
-				enemy.setCoordX(enemy.getCoordX() + speedX);
-				enemy.setCoordY(enemy.getCoordY() + speedY);
+				enemy.setCoordX(enemy.getCoordX() + enemyXSpeed);
+				enemy.setCoordY(enemy.getCoordY() + enemyYSpeed);
 
 				if (enemy.getCoordX() > (initPoss + 75)) {
-					enemy.setCoordX(initPoss + 75 - speedX);
-					enemy.setCoordY(initPoss + 75 - speedY);
-					speedX = speedX * -1;
+					enemy.setCoordX(initPoss + 75 - enemyXSpeed);
+					enemy.setCoordY(initPoss + 75 - enemyYSpeed);
+					enemyXSpeed = enemyXSpeed * -1;
 				} else if (enemy.getCoordX() < initPoss) {
 					enemy.setCoordX(initPoss);
-					speedX = speedX * -1;
+					enemyXSpeed = enemyXSpeed * -1;
 				}
 				if (enemy.getCoordY() >= 540) {
-					System.out.println("Game Over!!!!!!");
-					setEndGame(true);
+					setEndOfGame(true);
 					stop();
 				}
 				if (enemy.getLogo() == null) {
 					stop();
-					System.out.println("No se que hacer.");
 				}
 				enemy.render(graphics);
 			}
@@ -83,8 +81,8 @@ public abstract class EnemyRow {
 		int enemyCoordX = -10 * size + 60;
 		int enemyCoordY = 50;
 		for (int i = 1; i <= size; i++) {
-			EnemyShip enemy = new EnemyShip("/Images/space-invadersE.png", enemyCoordX, enemyCoordY, i);
-			enemyRow.addEnd(enemy);
+			EnemyShip enemy = new EnemyShip("/Images/space-invadersBasic.png", enemyCoordX, enemyCoordY, i);
+			enemyRow.insertEnd(enemy);
 			enemyCoordX += 1280 / size;
 		}
 	}
@@ -99,10 +97,10 @@ public abstract class EnemyRow {
 		int shipPos = 1 + (int) (Math.random() * ((enemyRow.getSize() - 1) + 1));
 		Node current = enemyRow.getFlag();
 		while (current != null) {
-			if (current.getEnemyShip().getShipPoss() == shipPos) {
-				current.getEnemyShip().setIsBoss(true);
-				current.getEnemyShip().setLogo(new Image("/Images/space-invadersA.png"));
-				return current.getEnemyShip();
+			if (current.getData().getShipPoss() == shipPos) {
+				current.getData().setIsBoss(true);
+				current.getData().setLogo(new Image("/Images/space-invadersBoss.png"));
+				return current.getData();
 			}
 			current = current.getNext();
 		}
@@ -112,7 +110,7 @@ public abstract class EnemyRow {
 	/**
 	 * Metodo que elimina el jefe.
 	 */
-	public void bossDestroyer() {
+	public void executeBossDestroyer() {
 		enemyRow.deleteAllNodes();
 	}
 
@@ -137,55 +135,55 @@ public abstract class EnemyRow {
 	/**
 	 * Getter: Obtiene el jefe de una hilera de naves enemigas.
 	 * 
-	 * @return EnemyShip boosDirector: Jefe de la hilera de naves enemigas.
+	 * @return EnemyShip boos: Jefe de la hilera de naves enemigas.
 	 */
-	public EnemyShip getBoosDirector() {
-		return boosDirector;
+	public EnemyShip getBoss() {
+		return boss;
 	}
 
 	/**
 	 * Setter: Establece el jefe de una hilera de naves enemigas.
 	 * 
-	 * @param boosDirector: Jefe de la hilera.
+	 * @param boss: Jefe de la hilera.
 	 */
-	public void setBoosDirector(EnemyShip boosDirector) {
-		this.boosDirector = boosDirector;
+	public void setBoss(EnemyShip boss) {
+		this.boss = boss;
 	}
 
 	/**
 	 * Getter: Obtiene el valor de la velicidad de las naves en X.
 	 * 
-	 * @return double speedX: Velocidad de las naves enemigas en X.
+	 * @return double enemyXSpeed: Velocidad de las naves enemigas en X.
 	 */
-	public double getSpeedX() {
-		return speedX;
+	public double getEnemyXSpeed() {
+		return enemyXSpeed;
 	}
 
 	/**
 	 * Setter: Establece el valor de la velicidad de las naves en X.
 	 * 
-	 * @param speedX: Velocidad de las naves enemigas en X.
+	 * @param enemyXSpeed: Velocidad de las naves enemigas en X.
 	 */
-	public void setSpeedX(double speedX) {
-		this.speedX = speedX;
+	public void setEnemyXSpeed(double enemyXSpeed) {
+		this.enemyXSpeed = enemyXSpeed;
 	}
 
 	/**
 	 * Getter: Obtiene el valor de la velicidad de las naves en Y.
 	 * 
-	 * @return double speedY: Velocidad de las naves enemigas en Y.
+	 * @return double enemyYSpeed: Velocidad de las naves enemigas en Y.
 	 */
-	public double getSpeedY() {
-		return speedY;
+	public double getEnemyYSpeed() {
+		return enemyYSpeed;
 	}
 
 	/**
 	 * Setter: Establece el valor de la velicidad de las naves en Y.
 	 * 
-	 * @param speedY: Velocidad de las naves enemigas en Y.
+	 * @param enemyYSpeed: Velocidad de las naves enemigas en Y.
 	 */
-	public void setSpeedY(double speedY) {
-		this.speedY = speedY;
+	public void setEnemyYSpeed(double enemyYSpeed) {
+		this.enemyYSpeed = enemyYSpeed;
 	}
 
 	/**
@@ -212,17 +210,17 @@ public abstract class EnemyRow {
 	 * 
 	 * @return Boolean: Verdadero o falso, dependiendo del estado del juego.
 	 */
-	public boolean isEndGame() {
-		return endGame;
+	public boolean isEndOfGame() {
+		return endOfGame;
 	}
 
 	/**
 	 * Setter: Establece el valor de la variable endGame.
 	 * 
-	 * @param endGame: Verdadero o falso, dependiendo de si el juego ha finalizado o
-	 *                 no.
+	 * @param endOfGame: Verdadero o falso, dependiendo de si el juego ha finalizado
+	 *                   o no.
 	 */
-	public void setEndGame(boolean endGame) {
-		this.endGame = endGame;
+	public void setEndOfGame(boolean endOfGame) {
+		this.endOfGame = endOfGame;
 	}
 }

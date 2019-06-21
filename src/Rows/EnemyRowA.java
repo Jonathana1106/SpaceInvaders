@@ -22,28 +22,28 @@ public class EnemyRowA extends EnemyRow {
 	 */
 	public EnemyRowA() {
 		this.enemyRow = new SimpleLinkedList();
-		this.boosDirector = null;
-		this.speedX = 2;
-		this.speedY = 1;
+		this.boss = null;
+		this.enemyXSpeed = 2;
+		this.enemyYSpeed = 0.4;
 	}
 
 	@Override
 	public void createEnemyRow(GraphicsContext graphics) {
 		if (enemyRow.getFlag() == null) {
 			this.setEnemyRow();
-			this.setSpeedY(this.speedY + 0.05);
+			this.setEnemyYSpeed(this.enemyYSpeed + 0.05);
 			enemyRow = this.getEnemyRow();
 			bool = true;
 		}
 
 		if (bool == true) {
-			this.setBoosDirector(this.chooseBoss(enemyRow));
-			this.getBoosDirector().setShootsRequired();
+			this.setBoss(this.chooseBoss(enemyRow));
+			this.getBoss().setShootsRequired();
 		}
 
 		Node current = enemyRow.getFlag();
 		while (current != null) {
-			EnemyShip enemy = current.getEnemyShip();
+			EnemyShip enemy = current.getData();
 			enemy.render(graphics);
 			if (bool == true) {
 				this.animateEnemyRow(enemy, graphics);

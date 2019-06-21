@@ -21,33 +21,33 @@ public class EnemyRowB extends EnemyRow {
 
 	public EnemyRowB() {
 		this.enemyRow = new DoublyLinkedList();
-		this.boosDirector = null;
-		this.speedX = 5;
-		this.speedY = 1;
+		this.boss = null;
+		this.enemyXSpeed = 2;
+		this.enemyYSpeed = 0.5;
 	}
 
 	@Override
 	public void createEnemyRow(GraphicsContext graphics) {
 		if (enemyRow.getFlag() == null) {
 			this.setEnemyRow();
-			this.setSpeedY(this.speedY + 0.05);
+			this.setEnemyYSpeed(this.enemyYSpeed + 0.05);
 			enemyRow = this.getEnemyRow();
 			bool = true;
 		}
 
 		if (bool == true) {
-			if (this.getBoosDirector() != null) {
-				this.getBoosDirector().setLogo(new Image("Images/space-invadersB.png"));
-				this.getBoosDirector().setIsBoss(false);
+			if (this.getBoss() != null) {
+				this.getBoss().setLogo(new Image("Images/space-invadersB.png"));
+				this.getBoss().setIsBoss(false);
 			}
 
-			this.setBoosDirector(this.chooseBoss(enemyRow));
-			this.getBoosDirector().setShootsRequired();
+			this.setBoss(this.chooseBoss(enemyRow));
+			this.getBoss().setShootsRequired();
 		}
 
 		Node currentNode = enemyRow.getFlag();
 		while (currentNode != null) {
-			EnemyShip enemy = currentNode.getEnemyShip();
+			EnemyShip enemy = currentNode.getData();
 			enemy.render(graphics);
 			if (bool == true) {
 				this.animateEnemyRow(enemy, graphics);
@@ -66,7 +66,7 @@ public class EnemyRowB extends EnemyRow {
 	public Node searchBoss() {
 		Node currentNode = enemyRow.getFlag();
 		while (currentNode.getNext() != null) {
-			if (currentNode.getEnemyShip().getIsBoss()) {
+			if (currentNode.getData().getIsBoss()) {
 				return currentNode;
 			} else {
 				currentNode = currentNode.getNext();
@@ -97,7 +97,7 @@ public class EnemyRowB extends EnemyRow {
 			newBoss.setLogo(bossLogo);
 			newBoss.setShootsReceived(shootsReceived);
 			newBoss.setShootsRequired(shootsRequired);
-			this.setBoosDirector(newBoss);
+			this.setBoss(newBoss);
 		}
 	}
 
@@ -115,12 +115,12 @@ public class EnemyRowB extends EnemyRow {
 					EnemyShip newBoss;
 					if (enemy.getIsBoss() && enemyRow.getSize() > 1) {
 						try {
-							newBoss = enemyRow.chooseRandomNode().getEnemyShip();
+							newBoss = enemyRow.chooseRandomNode().getData();
 						} catch (NullPointerException ex) {
-							if (enemy == enemyRow.getFlag().getEnemyShip()) {
-								newBoss = enemyRow.getFlag().getNext().getEnemyShip();
+							if (enemy == enemyRow.getFlag().getData()) {
+								newBoss = enemyRow.getFlag().getNext().getData();
 							} else {
-								newBoss = enemyRow.getFlag().getEnemyShip();
+								newBoss = enemyRow.getFlag().getData();
 							}
 						}
 						if (!newBoss.getIsBoss()) {
@@ -130,19 +130,19 @@ public class EnemyRowB extends EnemyRow {
 					lastUpdate = arg0;
 				}
 
-				enemy.setCoordX(enemy.getCoordX() + speedX);
-				enemy.setCoordY(enemy.getCoordY() + speedY);
+				enemy.setCoordX(enemy.getCoordX() + enemyXSpeed);
+				enemy.setCoordY(enemy.getCoordY() + enemyYSpeed);
 
 				if (enemy.getCoordX() > (initPoss + 85)) {
-					enemy.setCoordX((initPoss + 85) - speedX);
-					speedX *= -1;
+					enemy.setCoordX((initPoss + 85) - enemyXSpeed);
+					enemyXSpeed *= -1;
 				} else if (enemy.getCoordX() < initPoss) {
 					enemy.setCoordX(initPoss);
-					speedX *= -1;
+					enemyXSpeed *= -1;
 				}
 
 				if (enemy.getCoordY() >= 540) {
-					setEndGame(true);
+					setEndOfGame(true);
 					stop();
 				}
 

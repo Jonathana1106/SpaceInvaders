@@ -22,21 +22,21 @@ public class BasicEnemyRow extends EnemyRow {
 	 */
 	public BasicEnemyRow() {
 		this.enemyRow = new SimpleLinkedList();
-		this.speedX = 2;
-		this.speedY = 1;
+		this.enemyXSpeed = 2;
+		this.enemyYSpeed = 0.4;
 	}
 
 	@Override
 	public void createEnemyRow(GraphicsContext graphics) {
 		if (enemyRow.getFlag() == null) {
 			this.setEnemyRow();
-			this.setSpeedY(this.getSpeedY() + 0.05);
+			this.setEnemyYSpeed(this.getEnemyYSpeed() + 0.05);
 			enemyRow = this.getEnemyRow();
 			bool = true;
 		}
 		Node currentNode = enemyRow.getFlag();
 		while (currentNode != null) {
-			EnemyShip enemy = currentNode.getEnemyShip();
+			EnemyShip enemy = currentNode.getData();
 			enemy.render(graphics);
 			if (bool == true) {
 				this.animateEnemyRow(enemy, graphics);
