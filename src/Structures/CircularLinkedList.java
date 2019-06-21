@@ -35,25 +35,22 @@ public class CircularLinkedList extends LinkedList {
 	@Override
 	public EnemyShip getData(int shipInfo) {
 		Node currentNode = tail;
-		if (currentNode.getEnemyShip().getShipPoss() == shipInfo) {
-			return currentNode.getEnemyShip();
+		if (currentNode.getData().getShipPoss() == shipInfo) {
+			return currentNode.getData();
 		} else {
-			/**
-			 * do while;
-			 */
-			while (currentNode != tail) {
-				if (currentNode.getEnemyShip().getShipPoss() == shipInfo) {
-					return currentNode.getEnemyShip();
+			do {
+				if (currentNode.getData().getShipPoss() == shipInfo) {
+					return currentNode.getData();
 				} else {
 					currentNode = currentNode.getNext();
 				}
-			}
+			} while (currentNode != tail);
 		}
 		return null;
 	}
 
 	@Override
-	public void addEnd(EnemyShip ship) {
+	public void insertEnd(EnemyShip ship) {
 		Node newNode = new Node(ship, null);
 		if (tail != null) {
 			newNode.setNext(tail.getNext());
@@ -69,16 +66,16 @@ public class CircularLinkedList extends LinkedList {
 	public void deleteNode(EnemyShip ship) {
 		try {
 			Node currentNode = tail;
-			if (currentNode.getEnemyShip() == ship && currentNode.getNext() == tail) {
+			if (currentNode.getData() == ship && currentNode.getNext() == tail) {
 				tail = null;
 				size--;
 			} else {
 				do {
-					if (currentNode.getNext().getEnemyShip() == ship && currentNode.getNext() == tail) {
+					if (currentNode.getNext().getData() == ship && currentNode.getNext() == tail) {
 						currentNode.setNext(currentNode.getNext().getNext());
 						tail = currentNode;
 						size--;
-					} else if (currentNode.getNext().getEnemyShip() == ship) {
+					} else if (currentNode.getNext().getData() == ship) {
 						currentNode.setNext(currentNode.getNext().getNext());
 						size--;
 					} else {

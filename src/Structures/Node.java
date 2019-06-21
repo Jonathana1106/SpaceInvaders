@@ -18,7 +18,7 @@ public class Node {
 	 */
 	private Node prev;
 	private Node next;
-	private EnemyShip enemyShip;
+	private EnemyShip data;
 
 	/**
 	 * Constructor de la clase Nodo.
@@ -26,7 +26,7 @@ public class Node {
 	 * @param data: Nave enemiga.
 	 */
 	public Node(EnemyShip enemyShip) {
-		this.enemyShip = enemyShip;
+		this.data = enemyShip;
 	}
 
 	/**
@@ -36,7 +36,7 @@ public class Node {
 	 * @param next: Referencia al proximo nodo.
 	 */
 	public Node(EnemyShip enemyShip, Node next) {
-		this.enemyShip = enemyShip;
+		this.data = enemyShip;
 		this.prev = next;
 	}
 
@@ -48,7 +48,7 @@ public class Node {
 	 * @param next: Referencia al nodo siguiente.
 	 */
 	public Node(EnemyShip enemyShip, Node prev, Node next) {
-		this.enemyShip = enemyShip;
+		this.data = enemyShip;
 		this.prev = prev;
 		this.next = next;
 	}
@@ -94,8 +94,8 @@ public class Node {
 	 * 
 	 * @return EnemyShip enemyShip: Nave emeniga.
 	 */
-	public EnemyShip getEnemyShip() {
-		return enemyShip;
+	public EnemyShip getData() {
+		return this.data;
 	}
 
 	/**
@@ -103,8 +103,8 @@ public class Node {
 	 * 
 	 * @param enemyShip : Nave enemiga.
 	 */
-	public void setEnemyShip(EnemyShip enemyShip) {
-		this.enemyShip = enemyShip;
+	public void setData(EnemyShip enemyShip) {
+		this.data = enemyShip;
 	}
 
 }

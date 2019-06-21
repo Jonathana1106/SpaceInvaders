@@ -37,8 +37,8 @@ public class DoublyLinkedList extends LinkedList {
 	public EnemyShip getData(int shipInfo) {
 		Node currentNode = head;
 		while (currentNode != null) {
-			if (currentNode.getEnemyShip().getShipPoss() == shipInfo) {
-				return currentNode.getEnemyShip();
+			if (currentNode.getData().getShipPoss() == shipInfo) {
+				return currentNode.getData();
 			} else {
 				currentNode = currentNode.getNext();
 			}
@@ -47,7 +47,7 @@ public class DoublyLinkedList extends LinkedList {
 	}
 
 	@Override
-	public void addEnd(EnemyShip ship) {
+	public void insertEnd(EnemyShip ship) {
 		Node newNode = new Node(ship, null, null);
 		if (head == null) {
 			head = newNode;
@@ -66,22 +66,20 @@ public class DoublyLinkedList extends LinkedList {
 	public void deleteNode(EnemyShip ship) {
 		try {
 			Node currentNode = head;
-			if (currentNode.getNext() == null && currentNode.getEnemyShip() == ship) {
+			if (currentNode.getNext() == null && currentNode.getData() == ship) {
 				head = null;
 				size--;
-			} else if (currentNode.getNext() != null && currentNode.getEnemyShip() == ship) {
+			} else if (currentNode.getNext() != null && currentNode.getData() == ship) {
 				head = currentNode.getNext();
-				head.setPrev(null);
 				currentNode.setNext(null);
+				head.setPrev(null);
 				size--;
 			} else {
 				while (currentNode.getNext() != null) {
-					if (currentNode.getNext().getEnemyShip() == ship) {
+					if (currentNode.getNext().getData() == ship) {
 						currentNode.getNext().setPrev(null);
 						if (currentNode.getNext().getNext() != null) {
 							currentNode.getNext().getNext().setPrev(currentNode);
-//							currentNode.setNext(currentNode.getNext().getNext());
-//							size--;
 						}
 						currentNode.setNext(currentNode.getNext().getNext());
 						size--;
@@ -93,7 +91,7 @@ public class DoublyLinkedList extends LinkedList {
 					}
 				}
 			}
-		} catch (Exception e) {
+		} catch (NullPointerException e) {
 		}
 	}
 }

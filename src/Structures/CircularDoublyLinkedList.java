@@ -37,8 +37,8 @@ public class CircularDoublyLinkedList extends LinkedList {
 	public EnemyShip getData(int shipInfo) {
 		Node currentNode = head;
 		while (currentNode != null) {
-			if (currentNode.getEnemyShip().getShipPoss() == shipInfo) {
-				return currentNode.getEnemyShip();
+			if (currentNode.getData().getShipPoss() == shipInfo) {
+				return currentNode.getData();
 			}
 			currentNode = currentNode.getNext();
 		}
@@ -46,7 +46,7 @@ public class CircularDoublyLinkedList extends LinkedList {
 	}
 
 	@Override
-	public void addEnd(EnemyShip ship) {
+	public void insertEnd(EnemyShip ship) {
 		Node newNode = new Node(ship, null, null);
 		if (head == null) {
 			newNode.setNext(newNode);
@@ -75,10 +75,10 @@ public class CircularDoublyLinkedList extends LinkedList {
 	public void deleteNode(EnemyShip ship) {
 		try {
 			Node currentNode = head;
-			if (currentNode.getNext() == head && currentNode.getEnemyShip() == ship) {
+			if (currentNode.getNext() == head && currentNode.getData() == ship) {
 				head = null;
 				size--;
-			} else if (currentNode.getNext() != head && currentNode.getEnemyShip() == ship) {
+			} else if (currentNode.getNext() != head && currentNode.getData() == ship) {
 				currentNode = currentNode.getPrev();
 				currentNode.setNext(head.getNext());
 				head.getNext().setPrev(currentNode);
@@ -88,7 +88,7 @@ public class CircularDoublyLinkedList extends LinkedList {
 				size--;
 			} else {
 				while (currentNode.getNext() != head) {
-					if (currentNode.getNext().getEnemyShip() == ship) {
+					if (currentNode.getNext().getData() == ship) {
 						currentNode.getNext().setPrev(null);
 						currentNode.setNext(currentNode.getNext().getNext());
 						currentNode.getNext().getPrev().setNext(null);

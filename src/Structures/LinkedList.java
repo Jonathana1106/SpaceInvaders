@@ -46,7 +46,7 @@ public abstract class LinkedList {
 	 * 
 	 * @param ship: Nave que contiene el nuevo nodo.
 	 */
-	public abstract void addEnd(EnemyShip ship);
+	public abstract void insertEnd(EnemyShip ship);
 
 	/**
 	 * Metodo que se encarga de eliminar un nodo.
@@ -61,12 +61,12 @@ public abstract class LinkedList {
 	 * @return Node: Nodo escogido.
 	 */
 	public Node chooseRandomNode() {
-		int random = 1 + (int) (Math.random() * (size));
+		int random = 1 + (int) (Math.random() * ((size - 1) + 1));
 		Node currentNode = this.getFlag();
 
 		for (int i = 1; i <= this.size; i++) {
-			if (currentNode.getEnemyShip().getShipPoss() == random) {
-				if (currentNode.getEnemyShip().getIsBoss()) {
+			if (currentNode.getData().getShipPoss() == random) {
+				if (currentNode.getData().getIsBoss()) {
 					if (currentNode.getNext() == null && currentNode.getPrev() != null) {
 						currentNode = currentNode.getPrev();
 					} else if (currentNode.getPrev() == null && currentNode.getNext() != null) {
@@ -89,8 +89,8 @@ public abstract class LinkedList {
 		try {
 			while (this.getFlag() != null) {
 				Node currentNode = this.getFlag();
-				currentNode.getEnemyShip().setLogo(null);
-				this.deleteNode(currentNode.getEnemyShip());
+				currentNode.getData().setLogo(null);
+				this.deleteNode(currentNode.getData());
 			}
 		} catch (NullPointerException e) {
 		}
@@ -105,7 +105,7 @@ public abstract class LinkedList {
 	public Node searchNode(EnemyShip enemyShip) {
 		Node currentNode = this.getFlag();
 		for (int i = 1; i <= this.size; i++) {
-			if (currentNode.getEnemyShip() == enemyShip) {
+			if (currentNode.getData() == enemyShip) {
 				break;
 			} else {
 				currentNode = currentNode.getNext();
