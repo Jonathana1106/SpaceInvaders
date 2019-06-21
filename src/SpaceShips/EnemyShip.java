@@ -17,7 +17,7 @@ public class EnemyShip extends Ship {
 	/**
 	 * Variables de la clase.
 	 */
-	private int shipPoss;
+	private int shipPos;
 	private boolean isBoss;
 	private int shootsRequired;
 	private int shootsReceived;
@@ -25,16 +25,16 @@ public class EnemyShip extends Ship {
 	/**
 	 * Constructor de EnemyShip.
 	 * 
-	 * @param logo:     Imagen de la nave enemiga.
-	 * @param coordX:   Coordenada en X de la nave enemiga.
-	 * @param coordY:   Coordenada en Y de la nave enemiga.
-	 * @param shipPoss: Posicion de la nave dentro de la hilera de naves enemigas.
+	 * @param logo:    Imagen de la nave enemiga.
+	 * @param coordX:  Coordenada en X de la nave enemiga.
+	 * @param coordY:  Coordenada en Y de la nave enemiga.
+	 * @param shipPos: Posicion de la nave dentro de la hilera de naves enemigas.
 	 */
 	public EnemyShip(String logo, double coordX, double coordY, int shipPoss) {
 		this.logo = new Image(logo);
 		this.coordX = coordX;
 		this.coordY = coordY;
-		this.shipPoss = shipPoss;
+		this.shipPos = shipPoss;
 		this.isBoss = false;
 		this.shootsRequired = 0;
 		this.shootsReceived = 0;
@@ -44,10 +44,10 @@ public class EnemyShip extends Ship {
 	 * Getter: Obtiene la posicion de la nave enemiga dentro de la lista enlazada
 	 * (hilera).
 	 * 
-	 * @return int shipPoss: Posicion de la nave en la hilera.
+	 * @return int shipPos: Posicion de la nave en la hilera.
 	 */
 	public int getShipPoss() {
-		return shipPoss;
+		return shipPos;
 	}
 
 	/**
@@ -56,7 +56,7 @@ public class EnemyShip extends Ship {
 	 * @param shipPoss: Posicion de la nave dentro de la hilera.
 	 */
 	public void setShipPoss(int shipPoss) {
-		this.shipPoss = shipPoss;
+		this.shipPos = shipPoss;
 	}
 
 	/**
