@@ -9,6 +9,7 @@ import javafx.scene.image.Image;
  * UserShip: Clase de la nave controlada por el usuario.
  * 
  * @author Jonathan
+ * @version 3.0
  *
  */
 public class UserShip extends Ship {

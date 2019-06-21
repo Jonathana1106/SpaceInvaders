@@ -1,3 +1,6 @@
+/**
+ * 
+ */
 package SpaceShips;
 
 import javafx.geometry.Rectangle2D;
@@ -9,57 +12,67 @@ import javafx.scene.image.Image;
  * nave cualquiera (enemiga o usuario).
  * 
  * @author Jonathan
+ * @version 3.0
  *
  */
 public abstract class Ship {
 
+	/**
+	 * Variables de la clase.
+	 */
 	protected Image logo;
 	protected double coordX;
 	protected double coordY;
 
 	/**
+	 * Getter: Obtiene la coordenada X de la nave.
 	 * 
-	 * @return
+	 * @return coordX: Coordenada X de la nave.
 	 */
 	public double getCoordX() {
 		return coordX;
 	}
 
 	/**
+	 * Setter: Establece la coordenada X de la Nave.
 	 * 
-	 * @param coordX
+	 * @param coordX: Coordenada X de la nave.
 	 */
 	public void setCoordX(double coordX) {
 		this.coordX = coordX;
 	}
 
 	/**
+	 * Getter: Obtiene la coordenada Y de la nave.
 	 * 
-	 * @return
+	 * @return coordY: Coordenada Y de la nave.
 	 */
 	public double getCoordY() {
 		return coordY;
 	}
 
 	/**
+	 * Setter: Establece la coordenada Y de la nave.
 	 * 
-	 * @param coordY
+	 * @param coordY: Coordenada Y de la nave.
 	 */
 	public void setCoordY(double coordY) {
 		this.coordY = coordY;
 	}
 
 	/**
+	 * Getter: Obtiene la imagen (logo) de la nave.
 	 * 
-	 * @return
+	 * @return Image logo: Imagen de la nave.
 	 */
 	public Image getLogo() {
 		return logo;
 	}
 
 	/**
+	 * Setter: Establece la imagen (logo) de la nave.
 	 * 
-	 * @param logo
+	 * @param logo: Imagen de la nave.
 	 */
 	public void setLogo(Image logo) {
 		this.logo = logo;
