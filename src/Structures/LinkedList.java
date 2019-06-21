@@ -27,9 +27,9 @@ public abstract class LinkedList {
 	public abstract Node getFlag();
 
 	/**
-	 * Getter: tamano de la lista.
+	 * Getter: Tamano de la lista.
 	 * 
-	 * @return int size: tamano de la lista enlazada.
+	 * @return int size: Tamano de la lista enlazada.
 	 */
 	public abstract int getSize();
 

@@ -54,54 +54,54 @@ public class Node {
 	}
 
 	/**
-	 * Getter: obtiene el nodo anterior.
+	 * Getter: Obtiene el nodo anterior.
 	 * 
-	 * @return Node prev: nodo anterior.
+	 * @return Node prev: Nodo anterior.
 	 */
 	public Node getPrev() {
 		return prev;
 	}
 
 	/**
-	 * Sstter: establece el nodo anterior.
+	 * Sstter: Establece el nodo anterior.
 	 * 
-	 * @param prev: nodo anterior.
+	 * @param prev: Nodo anterior.
 	 */
 	public void setPrev(Node prev) {
 		this.prev = prev;
 	}
 
 	/**
-	 * Getter: obtiene el nodo siguiente.
+	 * Getter: Obtiene el nodo siguiente.
 	 * 
-	 * @return Node next: nodo sucesor.
+	 * @return Node next: Nodo sucesor.
 	 */
 	public Node getNext() {
 		return next;
 	}
 
 	/**
-	 * Setter: establece el nodo siguiente.
+	 * Setter: Establece el nodo siguiente.
 	 * 
-	 * @param next: nodo siguiente.
+	 * @param next: Nodo siguiente.
 	 */
 	public void setNext(Node next) {
 		this.next = next;
 	}
 
 	/**
-	 * Getter: obtiene la nave contenida en el nodo.
+	 * Getter: Obtiene la nave contenida en el nodo.
 	 * 
-	 * @return EnemyShip enemyShip: nave emeniga.
+	 * @return EnemyShip enemyShip: Nave emeniga.
 	 */
 	public EnemyShip getEnemyShip() {
 		return enemyShip;
 	}
 
 	/**
-	 * Setter: establece una nave que se guardara en el nodo.
+	 * Setter: Establece una nave que se guardara en el nodo.
 	 * 
-	 * @param enemyShip : nave enemiga.
+	 * @param enemyShip : Nave enemiga.
 	 */
 	public void setEnemyShip(EnemyShip enemyShip) {
 		this.enemyShip = enemyShip;
