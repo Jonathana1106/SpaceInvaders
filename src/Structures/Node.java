@@ -18,30 +18,25 @@ public class Node {
 	 */
 	private Node prev;
 	private Node next;
-	private EnemyShip data;
+	private EnemyShip enemyShip;
 
 	/**
 	 * Constructor de la clase Nodo.
 	 * 
 	 * @param data: Nave enemiga.
 	 */
-	public Node(EnemyShip data) {
-		this.data = data;
+	public Node(EnemyShip enemyShip) {
+		this.enemyShip = enemyShip;
 	}
 
-//	public Node(EnemyShip data, Node prev) {
-//		this.data =  data;
-//		this.prev = prev;
-//	}
-//	
 	/**
 	 * Constructor Node.
 	 * 
 	 * @param data: Nave enemiga.
 	 * @param next: Referencia al proximo nodo.
 	 */
-	public Node(EnemyShip data, Node next) {
-		this.data = data;
+	public Node(EnemyShip enemyShip, Node next) {
+		this.enemyShip = enemyShip;
 		this.prev = next;
 	}
 
@@ -52,58 +47,64 @@ public class Node {
 	 * @param prev: Referencia al nodo anterior.
 	 * @param next: Referencia al nodo siguiente.
 	 */
-	public Node(EnemyShip data, Node prev, Node next) {
-		this.data = data;
+	public Node(EnemyShip enemyShip, Node prev, Node next) {
+		this.enemyShip = enemyShip;
 		this.prev = prev;
 		this.next = next;
 	}
 
 	/**
+	 * Getter: obtiene el nodo anterior.
 	 * 
-	 * @return
+	 * @return Node prev: nodo anterior.
 	 */
 	public Node getPrev() {
 		return prev;
 	}
 
 	/**
+	 * Sstter: establece el nodo anterior.
 	 * 
-	 * @param prev
+	 * @param prev: nodo anterior.
 	 */
 	public void setPrev(Node prev) {
 		this.prev = prev;
 	}
 
 	/**
+	 * Getter: obtiene el nodo siguiente.
 	 * 
-	 * @return
+	 * @return Node next: nodo sucesor.
 	 */
 	public Node getNext() {
 		return next;
 	}
 
 	/**
+	 * Setter: establece el nodo siguiente.
 	 * 
-	 * @param next
+	 * @param next: nodo siguiente.
 	 */
 	public void setNext(Node next) {
 		this.next = next;
 	}
 
 	/**
+	 * Getter: obtiene la nave contenida en el nodo.
 	 * 
-	 * @return
+	 * @return EnemyShip enemyShip: nave emeniga.
 	 */
-	public EnemyShip getData() {
-		return data;
+	public EnemyShip getEnemyShip() {
+		return enemyShip;
 	}
 
 	/**
+	 * Setter: establece una nave que se guardara en el nodo.
 	 * 
-	 * @param data
+	 * @param enemyShip : nave enemiga.
 	 */
-	public void setData(EnemyShip data) {
-		this.data = data;
+	public void setEnemyShip(EnemyShip enemyShip) {
+		this.enemyShip = enemyShip;
 	}
 
 }

@@ -19,14 +19,17 @@ public abstract class LinkedList {
 	protected int size;
 
 	/**
+	 * Se encarga de obtener el indicador bandera de la lista enlazada, puede ser
+	 * head o tail, segun del tipo de lista que se este utilizando.
 	 * 
-	 * @return
+	 * @return Node Flag: El nodo de referencia de la lista, head o tail.
 	 */
 	public abstract Node getFlag();
 
 	/**
+	 * Getter: tamano de la lista.
 	 * 
-	 * @return
+	 * @return int size: tamano de la lista enlazada.
 	 */
 	public abstract int getSize();
 
@@ -53,7 +56,7 @@ public abstract class LinkedList {
 	public abstract void deleteNode(EnemyShip ship);
 
 	/**
-	 * Metodo que se encarga de descoger un nodo de la lista de manera aleatoria.
+	 * Metodo que se encarga de escoger un nodo de la lista de manera aleatoria.
 	 * 
 	 * @return Node: Nodo escogido.
 	 */
@@ -62,8 +65,8 @@ public abstract class LinkedList {
 		Node currentNode = this.getFlag();
 
 		for (int i = 1; i <= this.size; i++) {
-			if (currentNode.getData().getShipPoss() == random) {
-				if (currentNode.getData().getIsBoss()) {
+			if (currentNode.getEnemyShip().getShipPoss() == random) {
+				if (currentNode.getEnemyShip().getIsBoss()) {
 					if (currentNode.getNext() == null && currentNode.getPrev() != null) {
 						currentNode = currentNode.getPrev();
 					} else if (currentNode.getPrev() == null && currentNode.getNext() != null) {
@@ -83,18 +86,13 @@ public abstract class LinkedList {
 	 * Elimina todos los nodos de una lista enlazada.
 	 */
 	public void deleteAllNodes() {
-//		try{
-//            while(this.getFlag() != null) {
-//                Node current = this.getFlag();
-//                current.getData().setLogo(null);
-//                this.deleteNode(current.getData());
-//            }
-//        }catch(NullPointerException ex){
-//        }
-
-		while (this.getFlag() != null) {
-			Node currentNode = this.getFlag();
-			currentNode.getData().setLogo(null);
+		try {
+			while (this.getFlag() != null) {
+				Node currentNode = this.getFlag();
+				currentNode.getEnemyShip().setLogo(null);
+				this.deleteNode(currentNode.getEnemyShip());
+			}
+		} catch (NullPointerException e) {
 		}
 	}
 
@@ -107,7 +105,7 @@ public abstract class LinkedList {
 	public Node searchNode(EnemyShip enemyShip) {
 		Node currentNode = this.getFlag();
 		for (int i = 1; i <= this.size; i++) {
-			if (currentNode.getData() == enemyShip) {
+			if (currentNode.getEnemyShip() == enemyShip) {
 				break;
 			} else {
 				currentNode = currentNode.getNext();

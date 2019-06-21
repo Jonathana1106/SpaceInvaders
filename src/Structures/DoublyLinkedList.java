@@ -6,13 +6,17 @@ package Structures;
 import SpaceShips.EnemyShip;
 
 /**
+ * DoublyLinkedList: Lista doblemente enlazada que hereda de la clase abstracta
+ * LinkedList.
+ * 
  * @author Jonathan
+ * @version 3.0
  *
  */
 public class DoublyLinkedList extends LinkedList {
 
 	/**
-	 * Constructor de la clase DoublyLinkedList
+	 * Constructor de la clase DoublyLinkedList.
 	 */
 	public DoublyLinkedList() {
 		this.head = null;
@@ -33,8 +37,8 @@ public class DoublyLinkedList extends LinkedList {
 	public EnemyShip getData(int shipInfo) {
 		Node currentNode = head;
 		while (currentNode != null) {
-			if (currentNode.getData().getShipPoss() == shipInfo) {
-				return currentNode.getData();
+			if (currentNode.getEnemyShip().getShipPoss() == shipInfo) {
+				return currentNode.getEnemyShip();
 			} else {
 				currentNode = currentNode.getNext();
 			}
@@ -60,34 +64,36 @@ public class DoublyLinkedList extends LinkedList {
 
 	@Override
 	public void deleteNode(EnemyShip ship) {
-		Node currentNode = head;
-		if (currentNode.getNext() == null && currentNode.getData() == ship) {
-			head = null;
-			size--;
-		} else if (currentNode.getNext() != null && currentNode.getData() == ship) {
-			head = currentNode.getNext();
-			head.setPrev(null);
-			currentNode.setNext(null);
-			size--;
-		} else {
-			while (currentNode.getNext() != null) {
-				if (currentNode.getNext().getData() == ship) {
-					currentNode.getNext().setPrev(null);
-					if (currentNode.getNext().getNext() != null) {
-						currentNode.getNext().getNext().setPrev(currentNode);
+		try {
+			Node currentNode = head;
+			if (currentNode.getNext() == null && currentNode.getEnemyShip() == ship) {
+				head = null;
+				size--;
+			} else if (currentNode.getNext() != null && currentNode.getEnemyShip() == ship) {
+				head = currentNode.getNext();
+				head.setPrev(null);
+				currentNode.setNext(null);
+				size--;
+			} else {
+				while (currentNode.getNext() != null) {
+					if (currentNode.getNext().getEnemyShip() == ship) {
+						currentNode.getNext().setPrev(null);
+						if (currentNode.getNext().getNext() != null) {
+							currentNode.getNext().getNext().setPrev(currentNode);
+//							currentNode.setNext(currentNode.getNext().getNext());
+//							size--;
+						}
 						currentNode.setNext(currentNode.getNext().getNext());
 						size--;
+						/**
+						 * else {currentNode.setNext(null); }
+						 */
+					} else {
+						currentNode = currentNode.getNext();
 					}
-					/**
-					 * Prueba
-					 */
-					else {
-						currentNode.setNext(null);
-					}
-				} else {
-					currentNode = currentNode.getNext();
 				}
 			}
+		} catch (Exception e) {
 		}
 	}
 }

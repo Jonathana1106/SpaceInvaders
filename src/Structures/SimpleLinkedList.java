@@ -36,8 +36,8 @@ public class SimpleLinkedList extends LinkedList {
 	public EnemyShip getData(int shipInfo) {
 		Node currentNode = head;
 		while (currentNode != null) {
-			if (currentNode.getData().getShipPoss() == shipInfo) {
-				return currentNode.getData();
+			if (currentNode.getEnemyShip().getShipPoss() == shipInfo) {
+				return currentNode.getEnemyShip();
 			} else {
 				currentNode = currentNode.getNext();
 			}
@@ -62,23 +62,26 @@ public class SimpleLinkedList extends LinkedList {
 
 	@Override
 	public void deleteNode(EnemyShip ship) {
-		Node currentNode = head;
-		if (currentNode.getNext() == null && currentNode.getData() == ship) {
-			head = null;
-			size--;
-		} else if (currentNode.getNext() != null && currentNode.getData() == ship) {
-			head = currentNode.getNext();
-			currentNode.setNext(null);
-			size--;
-		} else {
-			while (currentNode.getNext() != null) {
-				if (currentNode.getNext().getData() == ship) {
-					currentNode.setNext(currentNode.getNext().getNext());
-					size--;
-				} else {
-					currentNode = currentNode.getNext();
+		try {
+			Node currentNode = head;
+			if (currentNode.getNext() == null && currentNode.getEnemyShip() == ship) {
+				head = null;
+				size--;
+			} else if (currentNode.getNext() != null && currentNode.getEnemyShip() == ship) {
+				head = currentNode.getNext();
+				currentNode.setNext(null);
+				size--;
+			} else {
+				while (currentNode.getNext() != null) {
+					if (currentNode.getNext().getEnemyShip() == ship) {
+						currentNode.setNext(currentNode.getNext().getNext());
+						size--;
+					} else {
+						currentNode = currentNode.getNext();
+					}
 				}
 			}
+		} catch (Exception e) {
 		}
 	}
 }
