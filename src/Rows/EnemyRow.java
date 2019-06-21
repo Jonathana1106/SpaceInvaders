@@ -47,14 +47,13 @@ public abstract class EnemyRow {
 
 			@Override
 			public void handle(long arg0) {
-				graphics.clearRect(enemy.getCoordX(), enemy.getCoordY(), 1280, 720);
+				graphics.clearRect(enemy.getCoordX(), enemy.getCoordY(), 1280, 700);
 
 				enemy.setCoordX(enemy.getCoordX() + enemyXSpeed);
 				enemy.setCoordY(enemy.getCoordY() + enemyYSpeed);
 
 				if (enemy.getCoordX() > (initPoss + 75)) {
 					enemy.setCoordX(initPoss + 75 - enemyXSpeed);
-					enemy.setCoordY(initPoss + 75 - enemyYSpeed);
 					enemyXSpeed = enemyXSpeed * -1;
 				} else if (enemy.getCoordX() < initPoss) {
 					enemy.setCoordX(initPoss);
@@ -81,7 +80,7 @@ public abstract class EnemyRow {
 		int enemyCoordX = -10 * size + 60;
 		int enemyCoordY = 50;
 		for (int i = 1; i <= size; i++) {
-			EnemyShip enemy = new EnemyShip("/Images/space-invadersBasic.png", enemyCoordX, enemyCoordY, i);
+			EnemyShip enemy = new EnemyShip("/Images/space-invadersA.png", enemyCoordX, enemyCoordY, i);
 			enemyRow.insertEnd(enemy);
 			enemyCoordX += 1280 / size;
 		}
