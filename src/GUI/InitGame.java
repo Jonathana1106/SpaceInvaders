@@ -3,8 +3,14 @@ package GUI;
 import Rows.BasicEnemyRow;
 import Rows.EnemyRow;
 import Rows.EnemyRowA;
+import Rows.EnemyRowB;
+import Rows.EnemyRowC;
+import SpaceShips.Bullets;
+import SpaceShips.EnemyShip;
 import SpaceShips.UserShip;
 import Structures.LinkedList;
+import Structures.Node;
+import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -15,6 +21,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -34,7 +41,7 @@ public class InitGame extends Application {
 	 */
 	Scene scene;
 	Group root;
-	Canvas canvas = new Canvas(1280, 720);
+	Canvas canvas = new Canvas(1280, 700);
 	GraphicsContext gc;
 
 	EnemyRow row = null;
@@ -56,13 +63,13 @@ public class InitGame extends Application {
 	 * Velocidad y tamano de la nave del jugador.
 	 */
 	double lasserSpeed = 10;
-	double iconSize = 75;
+	double iconSize = 80;
 
 	/**
 	 * Variables del juego.
 	 */
 	String currentEnemyRow = "";
-	String nextEnemyRow = "Unknown";
+	String nextEnemyRow = "";
 	int countRows = 0;
 	int level = 0;
 	int score = 0;
@@ -114,6 +121,7 @@ public class InitGame extends Application {
 //		line.setStroke(Color.DARKCYAN);
 //		root.getChildren().add(line);
 
+		// ###################################################################//
 		/**
 		 * Creando la nave del usuario.
 		 */
@@ -131,9 +139,101 @@ public class InitGame extends Application {
 
 		Label label = new Label("");
 		label.setTextFill(Color.WHITE);
-		label.setFont(Font.font("AgencyFB", 20));
+		label.setFont(Font.font("Berlin Sans FB", 20));
 		label.setTranslateX(10);
 		label.setTranslateY(10);
+
+		new AnimationTimer() {
+			@Override
+			public void handle(long arg0) {
+				if (row != null) {
+					if (row.isEndOfGame()) {
+						stop();
+						GameOver gameOver = new GameOver();
+						gameOver.setLevel(level);
+						gameOver.setScore(score);
+						gameOver.stopGame(stage);
+						try {
+							gameOver.start(new Stage());
+						} catch (Exception e) {
+						}
+					}
+				}
+				if (enemyRow != null) {
+					try {
+						if (enemyRow.getFlag().getData().getCoordY() == 50) {
+							countRows += 1;
+						}
+					} catch (NullPointerException e) {
+						countRows += 1;
+					}
+				}
+				if (countRows % 4 == 0) {
+					level += 1;
+					chooseEnemyRow();
+					if (countRows == 4) {
+						countRows = 0;
+					}
+				}
+				label.setText("Level: " + level + "  Score:  " + score + "  |  Current Row: " + currentEnemyRow
+						+ " Next Row: " + nextEnemyRow);
+			}
+		}.start();
+
+		HBox hBox = new HBox(11);
+		hBox.setSpacing(12);
+		hBox.getChildren().add(label);
+		root.getChildren().add(hBox);
+		root.getChildren().add(canvas);
+		stage.show();
+	}
+
+	public void chooseEnemyRow() {
+		int list = 1 + (int) (Math.random() * ((3 - 1) + 1));
+		switch (level) {
+		case 1:
+			row = new BasicEnemyRow();
+			currentEnemyRow = "Basic";
+			nextEnemyRow = "Class A";
+			break;
+		case 2:
+			if (list != 3) {
+				row = new EnemyRowA();
+				currentEnemyRow = "Class A";
+			} else {
+				row = new EnemyRowB();
+				currentEnemyRow = "Class B";
+			}
+			break;
+		case 3:
+			if (list != 3) {
+				row = new EnemyRowB();
+				currentEnemyRow = "Class B";
+			} else {
+				row = new EnemyRowC();
+				currentEnemyRow = "Class C";
+			}
+			break;
+		default:
+			switch (list) {
+			case 1:
+				row = new EnemyRowC();
+				currentEnemyRow = "Class C";
+				break;
+			case 2:
+				row = new EnemyRowA();
+				currentEnemyRow = "Class D";
+				break;
+			case 3:
+				row = new BasicEnemyRow();
+				currentEnemyRow = "Class E";
+				break;
+			}
+		}
+		row.setEnemyRow();
+		enemyRow = row.getEnemyRow();
+		row.setBool(true);
+		row.createEnemyRow(gc);
 	}
 
 	/**
@@ -157,25 +257,68 @@ public class InitGame extends Application {
 			} else if (event.getCode() == KeyCode.DOWN && (defCoordY + iconSize) < HEIGHT) {
 				defCoordY = defCoordY + 10;
 				usr.setY(defCoordY);
+			} else if (event.getCode() == KeyCode.SPACE) {
+				Bullets bullet = new Bullets(defCoordX + iconSize / 2, defCoordY - iconSize / 2);
+				root.getChildren().add(bullet.getBullets());
+				animateBullets(enemyRow, bullet);
 			}
 		});
 	}
 
-	public void chooseEnemyRow() {
-		// int enemyCase = 1 + (int) (Math.random() * 3);
-		switch (level) {
-		case 1:
-			row = new BasicEnemyRow();
-			currentEnemyRow = "Basico";
-			break;
-		case 2:
-			row = new EnemyRowA();
-			currentEnemyRow = "Clase A";
-		}
-		row.setEnemyRow();
-		enemyRow = row.getEnemyRow();
-		row.setBool(true);
-		row.createEnemyRow(gc);
+	/**
+	 * Metodo encargado de realizar las animaciones de las balas.
+	 * 
+	 * @param enemyRow: Lista enlazada donde se encuetran las naves emenigas.
+	 * @param bullet
+	 */
+	public void animateBullets(LinkedList enemyRow, Bullets bullet) {
+		AnimationTimer animator = new AnimationTimer() {
+			@Override
+			public void handle(long arg0) {
+				bullet.setCoordY(bullet.getCoordY() - lasserSpeed);
+				bullet.getBullets().setCenterY(bullet.getCoordY());
+				if (bullet.getCoordY() <= 0) {
+					bullet.deleteBullets();
+					stop();
+				} else {
+					try {
+						Node currentNode = enemyRow.getFlag();
+						for (int i = 1; i <= enemyRow.getSize(); i++) {
+							EnemyShip enemy = currentNode.getData();
+							if (bullet.intersects(enemy)) {
+								bullet.deleteBullets();
+								stop();
+								if (enemy.getIsBoss()) {
+									enemy.setShootsReceived(enemy.getShootsReceived() + 1);
+									if (enemy.getShootsRequired() == enemy.getShootsReceived()) {
+										row.executeBossDestroyer();
+										score += 75;
+									}
+								} else {
+									if (enemy.getShootsRequired() != 0) {
+										enemy.setShootsReceived(enemy.getShootsReceived() + 1);
+										if (enemy.getShootsRequired() == enemy.getShootsReceived()) {
+											enemy.setLogo(null);
+											enemyRow.deleteNode(enemy);
+											score += 50;
+										}
+									} else {
+										enemy.setLogo(null);
+										enemyRow.deleteNode(enemy);
+										score += 25;
+									}
+								}
+								if ((countRows + 1) % 4 != 0 && enemyRow.getFlag() == null) {
+									chooseEnemyRow();
+								}
+							}
+							currentNode = currentNode.getNext();
+						}
+					} catch (NullPointerException ex) {
+					}
+				}
+			}
+		};
+		animator.start();
 	}
-
 }
