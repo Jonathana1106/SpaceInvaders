@@ -66,7 +66,7 @@ public class EnemyRowC extends EnemyRow {
 		do {
 			if (current.getData().getShipPoss() == shipPos) {
 				current.getData().setIsBoss(true);
-				current.getData().setLogo(new Image("/Images/space-invadersBoss.png"));
+				current.getData().setLogo(new Image("Images/space-invadersBoss.png"));
 				return current.getData();
 			}
 			current = current.getNext();
